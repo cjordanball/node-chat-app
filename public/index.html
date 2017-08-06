@@ -6,17 +6,9 @@
 	</head>
 	<body>
 		<p>Welcome to the chat app!</p>
+		<button onclick="hitIt()">Send Message</button>
 		<script src="/socket.io/socket.io.js"></script>
-		<script>
-			let socket = io({ reconnection: false });
-			
-			socket.on('connect', () => {
-				console.log('Connected to server.');
-			});
-			
-			socket.on('disconnect', () => {
-				console.log('The server connection is lost.');
-			});
+		<script src="/scripts/index.js">
 		</script>
 	</body>
 </html>

@@ -15,13 +15,20 @@ app.use(express.static(`${PUBLIC_PATH}`));
 io.on('connection', (socket) => {
 	console.log('New user connected.');
 
+	socket.emit('newMessage', {
+		from: 'cjordanball@icloud.com',
+		createdAt: new Date(),
+		text: 'Now is the winter of our discontent . . .'
+	});
+
+	socket.on('createMessage', (newMessage) => {
+		console.log('createEmail', newMessage);
+	})
+
 	socket.on('disconnect', () => {
 		console.log('User disconnected.');
 	});
 });
-
-
-
 
 app.get('/', (req, res) => {
 	res.send('index.html');

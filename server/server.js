@@ -15,13 +15,33 @@ app.use(express.static(`${PUBLIC_PATH}`));
 io.on('connection', (socket) => {
 	console.log('New user connected.');
 
+	socket.emit('newMessage', {
+		from: 'Admin',
+		text: 'Welcome to the chat app!',
+		createdAt: new Date()
+	});
+
+	socket.broadcast.emit('newMessage', {
+		from: 'Admin',
+		text: 'A new User has joined',
+		createdAt: new Date()
+	})
+
 	socket.on('createMessage', (newMessage) => {
-		console.log('createEmail', newMessage);
-		io.emit('newMessage', {
-			from: newMessage.from,
-			text: newMessage.text,
-			createdAt: new Date()
-		})
+		console.log('createMessage', newMessage);
+
+
+
+		//io.emit('newMessage', {
+		//	from: newMessage.from,
+		//	text: newMessage.text,
+		//	createdAt: new Date()
+		//})
+		//socket.broadcast.emit('newMessage', {
+		//	from: newMessage.from,
+		//	text: newMessage.text,
+		//	createdAt: new Date()
+		//});
 	})
 
 	socket.on('disconnect', () => {
@@ -35,7 +55,7 @@ app.get('/', (req, res) => {
 
 server.listen(PORT, (err) => {
 	if (err) {
-		console.log(err);
+		console.log('ERR:', err);
 		process.exit(1);
 	}
 	console.log(`Server running on port ${PORT}!`);
